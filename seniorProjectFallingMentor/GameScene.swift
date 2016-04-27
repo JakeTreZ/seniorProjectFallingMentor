@@ -68,10 +68,13 @@ class GameScene: SKScene {
             health > 0){
             
             nextTime = now?.dateByAddingTimeInterval(NSTimeInterval(timeBetweenMentors!))
-            let newX = Int(arc4random()%1024)
-            let newY = Int(self.frame.height+10)
-            let p = CGPoint(x:newX,y:newY)
-            let destination =  CGPoint(x:newX, y:0.0)
+            let randomXValue = Int(arc4random()%UInt32(self.frame.width))
+            
+            let bottomOfTheScreenY = Int(self.frame.height+10)
+            
+            let p = CGPoint(x:randomXValue, y:bottomOfTheScreenY)
+            
+            let destination =  CGPoint(x:randomXValue, y: 0)
             
             createMentor(p, destination: destination)
             
@@ -89,13 +92,14 @@ class GameScene: SKScene {
      Adds the ship to the scene
      */
     func createMentor(p:CGPoint, destination:CGPoint) {
-        let sprite = SKSpriteNode(imageNamed:"Matt Legrand")
+        let sprite = SKSpriteNode(imageNamed:"matt")
         sprite.name = "Destroyable"
         sprite.xScale = 0.5
         sprite.yScale = 0.5
         sprite.position = p
         
         let duration = NSTimeInterval(moverSpeed)
+        
         let action = SKAction.moveTo(destination, duration: duration)
         sprite.runAction(SKAction.repeatActionForever(action))
         
