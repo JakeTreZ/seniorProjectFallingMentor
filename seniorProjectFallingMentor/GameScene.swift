@@ -25,6 +25,7 @@ class GameScene: SKScene {
     
 
     override func didMoveToView(view: SKView) {
+        super.didMoveToView(view);
         initializeValues()
     }
     
@@ -47,7 +48,9 @@ class GameScene: SKScene {
         healthLabel?.text = "Health: \(health)"
         healthLabel?.fontSize = 30
         healthLabel?.fontColor = SKColor.blackColor()
-        healthLabel?.position = CGPoint(x:CGRectGetMinX(self.frame) + 80, y:(CGRectGetMinY(self.frame) + 100));
+        healthLabel?.position = CGPoint(x: 70, y: 10);
+    
+        
         
         self.addChild(healthLabel!)
     }
