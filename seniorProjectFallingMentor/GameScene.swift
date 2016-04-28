@@ -17,12 +17,12 @@ class GameScene: SKScene {
     var currentNumberOfMentors : Int?
     var timeBetweenMentors : Double?
     var moverSpeed = 5.0
-    let moveFactor = 1.05
+    let moveFactor = 1.02
     var now : NSDate?
     var nextTime : NSDate?
     var gameOverLabel : SKLabelNode?
     var healthLabel : SKLabelNode?
-    
+    var scoreLabel : SKLabelNode?
 
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view);
@@ -49,10 +49,15 @@ class GameScene: SKScene {
         healthLabel?.fontSize = 30
         healthLabel?.fontColor = SKColor.blackColor()
         healthLabel?.position = CGPoint(x: 70, y: 10);
-    
-        
-        
         self.addChild(healthLabel!)
+        
+        
+        scoreLabel = SKLabelNode(fontNamed:"System")
+        scoreLabel?.text = "Score: \(score)"
+        scoreLabel?.fontSize = 30
+        scoreLabel?.fontColor = SKColor.blackColor()
+        scoreLabel?.position = CGPoint(x: 300, y: 10);
+        self.addChild(scoreLabel!)
     }
     
     /*
@@ -104,11 +109,7 @@ class GameScene: SKScene {
         let duration = NSTimeInterval(moverSpeed)
         
         let action = SKAction.moveTo(destination, duration: duration)
-        sprite.runAction(SKAction.repeatActionForever(action))
-        
-        let rotationAction = SKAction.rotateToAngle(CGFloat(3.142), duration: 0)
-        sprite.runAction(SKAction.repeatAction(rotationAction, count: 0))
-        
+        sprite.runAction(SKAction.repeatActionForever(action))      
         currentNumberOfMentors?+=1
         self.addChild(sprite)
     }
@@ -118,14 +119,14 @@ class GameScene: SKScene {
      */
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
-        
         for touch: AnyObject in touches {
             let location = (touch as! UITouch).locationInNode(self)
             if let theName = self.nodeAtPoint(location).name {
                 if theName == "Destroyable" {
                     self.removeChildrenInArray([self.nodeAtPoint(location)])
                     currentNumberOfMentors?-=1
-                    score+=1
+                    score = score+1
+                    scoreLabel?.text = "Score: \(score)"
                 }
             }
             if (gameOver==true){
